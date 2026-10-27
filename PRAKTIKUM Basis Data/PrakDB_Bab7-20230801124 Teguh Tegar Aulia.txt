@@ -1,0 +1,174 @@
+Microsoft Windows [Version 10.0.22631.4317]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HP>cd\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 16
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| orderentry         |
+| penjualan_barang   |
+| performance_schema |
+| pertemuan_4        |
+| phpmyadmin         |
+| praktikum          |
+| test               |
++--------------------+
+9 rows in set (0.001 sec)
+
+MariaDB [(none)]> use orderentry;
+Database changed
+MariaDB [orderentry]> show tables;
++----------------------+
+| Tables_in_orderentry |
++----------------------+
+| customers            |
+| orderitems           |
+| orders               |
+| productnotes         |
+| products             |
+| vendors              |
++----------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [orderentry]> select * from customers;
++---------+-----------+-----------+---------------------+--------------+
+| cust_id | cust_name | cust_city | cust_email          | cust_country |
++---------+-----------+-----------+---------------------+--------------+
+| AVH01   | Tegar     | Belanda   | tegar@gmail.com     | NULL         |
+| AVH02   | Diki      | Thailand  | diki@gmail.com      | NULL         |
+| AVH03   | Aji       | Chili     | Aji@gmail.com       | NULL         |
+| AVH04   | Rapli     | Irak      | Rapli@gmail.com     | NULL         |
+| AVH05   | Kurniawan | Denmark   | Kurniawan@gmail.com | NULL         |
++---------+-----------+-----------+---------------------+--------------+
+5 rows in set (0.001 sec)
+
+MariaDB [orderentry]> select * from orderitems;
++-----------+------------+-----------+----------+
+| order_num | order_item | prod_id   | quantity |
++-----------+------------+-----------+----------+
+|         6 |          1 | 3746F6    |        2 |
+|         7 |          1 | 5980V12   |        1 |
+|         8 |          1 | 6300V12   |        3 |
+|         9 |          1 | F140V12   |        1 |
+|        10 |          1 | 7000V8    |        4 |
+|      3130 |          7 | 217405969 |       50 |
+|      3131 |          3 | 610178985 |       32 |
+|      3132 |          9 | 064524482 |       75 |
+|      3133 |          2 | 013684315 |       93 |
+|      3134 |          9 | 042414275 |        1 |
++-----------+------------+-----------+----------+
+10 rows in set (0.001 sec)
+
+MariaDB [orderentry]> select * from orders;
++-----------+------------+---------+
+| order_num | order_date | cust_id |
++-----------+------------+---------+
+|         6 | 2012-05-14 | AVH01   |
+|         7 | 2015-07-22 | AVH02   |
+|         8 | 2020-11-30 | AVH01   |
+|         9 | 2018-03-19 | AVH03   |
+|        10 | 2021-09-04 | AVH01   |
++-----------+------------+---------+
+5 rows in set (0.001 sec)
+
+MariaDB [orderentry]> select * from productnotes;
+Empty set (0.001 sec)
+
+MariaDB [orderentry]> select * from products;
++---------+---------+---------------------------+--------------+-------------------------+
+| prod_id | vend_id | prod_name                 | prod_price   | prod_desc               |
++---------+---------+---------------------------+--------------+-------------------------+
+| 3746F6  | V001    | W Motors Lykan HyperSport |  55000000000 | Hypercar dari W Motors  |
+| 5980V12 | V002    | Pagani Kurota Copper      |  60000000000 | Hypercar dari Pagani    |
+| 6300V12 | V003    | Apollo Project EVO        |  46558050000 | Hypercar dari Apollo    |
+| 7000V8  | V004    | Hennessey Venom GT Spyder |  18600000000 | Supercar dari Hennessey |
+| 8000W16 | V005    | Bugatti La Voiture Noire  | 306300000000 | Hypercar dari Bugatti   |
+| F140V12 | V003    | Apollo Intensa Emozione   |  38000000000 | Hypercar dari Apollo    |
++---------+---------+---------------------------+--------------+-------------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [orderentry]> select * from vendors;
++---------+-------------------+-----------+--------------+
+| vend_id | vend_name         | vend_city | vend_country |
++---------+-------------------+-----------+--------------+
+| V001    | PT Kezyaluv Gituu | Jakarta   | Indonesia    |
+| V002    | PT Aqcelin Boo    | Bandung   | Indonesia    |
+| V003    | PT Jusstin K3cil  | Surabaya  | Indonesia    |
+| V004    | PT ZahraCut3 Max  | Medan     | Indonesia    |
+| V005    | PT R3za Punkz     | Denpasar  | Indonesia    |
++---------+-------------------+-----------+--------------+
+5 rows in set (0.001 sec)
+
+MariaDB [orderentry]> select v.vend_name, p.prod_price
+    -> from vendors v
+    -> join products p on v.vend_id = p.vend_id
+    -> where p.prod_price = (select min(prod_price) from products);
++------------------+-------------+
+| vend_name        | prod_price  |
++------------------+-------------+
+| PT ZahraCut3 Max | 18600000000 |
++------------------+-------------+
+1 row in set (0.001 sec)
+
+MariaDB [orderentry]> select distinct v.vend_city
+    -> from vendors v
+    -> join products p on v.vend_id = p.vend_id
+    -> where p.prod_price < 60000000000;
++-----------+
+| vend_city |
++-----------+
+| Jakarta   |
+| Surabaya  |
+| Medan     |
++-----------+
+3 rows in set (0.001 sec)
+
+MariaDB [orderentry]> select c.cust_name, o.order_date
+    -> from customers c
+    -> join orders o on c.cust_id = o.cust_id
+    -> where o.order_date = '2021-09-04';
++-----------+------------+
+| cust_name | order_date |
++-----------+------------+
+| Tegar     | 2021-09-04 |
++-----------+------------+
+1 row in set (0.001 sec)
+
+MariaDB [orderentry]> select c.cust_name, c.cust_city, c.cust_country
+    -> from customers c
+    -> join orders o on c.cust_id = o.cust_id
+    -> where o.order_num = '6';
++-----------+-----------+--------------+
+| cust_name | cust_city | cust_country |
++-----------+-----------+--------------+
+| Tegar     | Belanda   | NULL         |
++-----------+-----------+--------------+
+1 row in set (0.001 sec)
+
+MariaDB [orderentry]> select c.cust_name, c.cust_city, c.cust_country
+    -> from customers c
+    -> join orders o on c.cust_id = o.cust_id
+    -> group by c.cust_id
+    -> having count(o.order_num) > 1;
++-----------+-----------+--------------+
+| cust_name | cust_city | cust_country |
++-----------+-----------+--------------+
+| Tegar     | Belanda   | NULL         |
++-----------+-----------+--------------+
+1 row in set (0.001 sec)
+
+MariaDB [orderentry]>

@@ -1,0 +1,100 @@
+Microsoft Windows [Version 10.0.22631.4169]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HP>cd\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 10
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| orderentry         |
+| penjualan_barang   |
+| performance_schema |
+| phpmyadmin         |
+| praktikum          |
+| test               |
++--------------------+
+8 rows in set (0.000 sec)
+
+MariaDB [(none)]> create database Pertemuan_4;
+Query OK, 1 row affected (0.010 sec)
+
+MariaDB [(none)]> use Pertemuan_4;
+Database changed
+MariaDB [Pertemuan_4]> create table info_mahasiswa(
+    -> NAMA char(20),
+    -> NIM char(12),
+    -> FAKULTAS varchar(20),
+    -> ALAMAT varchar(100));
+Query OK, 0 rows affected (0.005 sec)
+
+MariaDB [Pertemuan_4]> desc info_mahasiswa;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| NAMA     | char(20)     | YES  |     | NULL    |       |
+| NIM      | char(12)     | YES  |     | NULL    |       |
+| FAKULTAS | varchar(20)  | YES  |     | NULL    |       |
+| ALAMAT   | varchar(100) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+4 rows in set (0.011 sec)
+
+MariaDB [Pertemuan_4]> alter table info_mahasiswa change NAMA NAMA_MAHASISWA char(20);
+Query OK, 0 rows affected (0.004 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [Pertemuan_4]> desc info_mahasiswa;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| NAMA_MAHASISWA | char(20)     | YES  |     | NULL    |       |
+| NIM            | char(12)     | YES  |     | NULL    |       |
+| FAKULTAS       | varchar(20)  | YES  |     | NULL    |       |
+| ALAMAT         | varchar(100) | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.025 sec)
+
+MariaDB [Pertemuan_4]> alter table info_mahasiswa modify NIM char(11);
+Query OK, 0 rows affected (0.020 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [Pertemuan_4]> desc info_mahasiswa;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| NAMA_MAHASISWA | char(20)     | YES  |     | NULL    |       |
+| NIM            | char(11)     | YES  |     | NULL    |       |
+| FAKULTAS       | varchar(20)  | YES  |     | NULL    |       |
+| ALAMAT         | varchar(100) | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.019 sec)
+
+MariaDB [Pertemuan_4]> alter table info_mahasiswa add RUANGAN varchar(10);
+Query OK, 0 rows affected (0.014 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [Pertemuan_4]> desc info_mahasiswa;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| NAMA_MAHASISWA | char(20)     | YES  |     | NULL    |       |
+| NIM            | char(11)     | YES  |     | NULL    |       |
+| FAKULTAS       | varchar(20)  | YES  |     | NULL    |       |
+| ALAMAT         | varchar(100) | YES  |     | NULL    |       |
+| RUANGAN        | varchar(10)  | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+5 rows in set (0.018 sec)
+
+MariaDB [Pertemuan_4]>

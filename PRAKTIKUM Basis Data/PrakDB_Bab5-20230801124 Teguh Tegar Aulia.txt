@@ -1,0 +1,285 @@
+Microsoft Windows [Version 10.0.22631.4317]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HP>cd\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| orderentry         |
+| penjualan_barang   |
+| performance_schema |
+| pertemuan_4        |
+| phpmyadmin         |
+| praktikum          |
+| test               |
++--------------------+
+9 rows in set (0.001 sec)
+
+MariaDB [(none)]> use penjualan_barang;
+Database changed
+MariaDB [penjualan_barang]> show tables;
++----------------------------+
+| Tables_in_penjualan_barang |
++----------------------------+
+| barang                     |
+| detail_jual                |
+| nota_penjualan             |
+| pelanggan                  |
++----------------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [penjualan_barang]> desc barang;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| id_barang   | varchar(20) | NO   | PRI | NULL    |       |
+| nama_barang | varchar(30) | YES  |     | NULL    |       |
+| harga       | int(11)     | YES  |     | NULL    |       |
+| stok        | int(11)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.012 sec)
+
+MariaDB [penjualan_barang]> insert into barang values ('6300V12','Apollo Intensa Emozione','38000000000','10');
+Query OK, 1 row affected, 1 warning (0.002 sec)
+
+MariaDB [penjualan_barang]> desc barang;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| id_barang   | varchar(20) | NO   | PRI | NULL    |       |
+| nama_barang | varchar(30) | YES  |     | NULL    |       |
+| harga       | int(11)     | YES  |     | NULL    |       |
+| stok        | int(11)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.007 sec)
+
+MariaDB [penjualan_barang]> select * from barang;
++-----------+-------------------------+------------+------+
+| id_barang | nama_barang             | harga      | stok |
++-----------+-------------------------+------------+------+
+| 6300V12   | Apollo Intensa Emozione | 2147483647 |   10 |
++-----------+-------------------------+------------+------+
+1 row in set (0.000 sec)
+
+MariaDB [penjualan_barang]> alter table barang modify harga varchar(20);
+Query OK, 1 row affected (0.019 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+MariaDB [penjualan_barang]> desc barang;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| id_barang   | varchar(20) | NO   | PRI | NULL    |       |
+| nama_barang | varchar(30) | YES  |     | NULL    |       |
+| harga       | varchar(20) | YES  |     | NULL    |       |
+| stok        | int(11)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.008 sec)
+
+MariaDB [penjualan_barang]> insert into barang values ('6300V12','Apollo Intensa Emozione','38000000000','10');
+ERROR 1062 (23000): Duplicate entry '6300V12' for key 'PRIMARY'
+MariaDB [penjualan_barang]> insert into barang values ('F140V12','Apollo Int
+ensa Emozione','38000000000','10');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [penjualan_barang]> select * from barang;
++-----------+-------------------------+-------------+------+
+| id_barang | nama_barang             | harga       | stok |
++-----------+-------------------------+-------------+------+
+| 6300V12   | Apollo Intensa Emozione | 2147483647  |   10 |
+| F140V12   | Apollo Intensa Emozione | 38000000000 |   10 |
++-----------+-------------------------+-------------+------+
+2 rows in set (0.000 sec)
+
+MariaDB [penjualan_barang]> delete from barang where id_barang= '6300V12';
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [penjualan_barang]> select * from barang;
++-----------+-------------------------+-------------+------+
+| id_barang | nama_barang             | harga       | stok |
++-----------+-------------------------+-------------+------+
+| F140V12   | Apollo Intensa Emozione | 38000000000 |   10 |
++-----------+-------------------------+-------------+------+
+1 row in set (0.000 sec)
+
+MariaDB [penjualan_barang]> insert into barang values ('8000W16','Bugatti La
+ Voiture Noire','306300000000','1');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [penjualan_barang]> select * from barang;
++-----------+--------------------------+--------------+------+
+| id_barang | nama_barang              | harga        | stok |
++-----------+--------------------------+--------------+------+
+| 8000W16   | Bugatti La Voiture Noire | 306300000000 |    1 |
+| F140V12   | Apollo Intensa Emozione  | 38000000000  |   10 |
++-----------+--------------------------+--------------+------+
+2 rows in set (0.000 sec)
+
+MariaDB [penjualan_barang]> insert into barang values ('3746F6','W Motors Ly
+kan HyperSport','55000000000','7');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [penjualan_barang]> select * from barang;
++-----------+---------------------------+--------------+------+
+| id_barang | nama_barang               | harga        | stok |
++-----------+---------------------------+--------------+------+
+| 3746F6    | W Motors Lykan HyperSport | 55000000000  |    7 |
+| 8000W16   | Bugatti La Voiture Noire  | 306300000000 |    1 |
+| F140V12   | Apollo Intensa Emozione   | 38000000000  |   10 |
++-----------+---------------------------+--------------+------+
+3 rows in set (0.000 sec)
+
+MariaDB [penjualan_barang]> insert into barang values ('7000V8','Hennessey V
+enom GT Spyder','18600000000','13');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [penjualan_barang]> select * from barang;
++-----------+---------------------------+--------------+------+
+| id_barang | nama_barang               | harga        | stok |
++-----------+---------------------------+--------------+------+
+| 3746F6    | W Motors Lykan HyperSport | 55000000000  |    7 |
+| 7000V8    | Hennessey Venom GT Spyder | 18600000000  |   13 |
+| 8000W16   | Bugatti La Voiture Noire  | 306300000000 |    1 |
+| F140V12   | Apollo Intensa Emozione   | 38000000000  |   10 |
++-----------+---------------------------+--------------+------+
+4 rows in set (0.000 sec)
+
+MariaDB [penjualan_barang]> insert into barang values ('5980V12','Pagani Kur
+ota Copper','60000000000','1');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [penjualan_barang]> select * from barang;
++-----------+---------------------------+--------------+------+
+| id_barang | nama_barang               | harga        | stok |
++-----------+---------------------------+--------------+------+
+| 3746F6    | W Motors Lykan HyperSport | 55000000000  |    7 |
+| 5980V12   | Pagani Kurota Copper      | 60000000000  |    1 |
+| 7000V8    | Hennessey Venom GT Spyder | 18600000000  |   13 |
+| 8000W16   | Bugatti La Voiture Noire  | 306300000000 |    1 |
+| F140V12   | Apollo Intensa Emozione   | 38000000000  |   10 |
++-----------+---------------------------+--------------+------+
+5 rows in set (0.000 sec)
+
+MariaDB [penjualan_barang]> insert into barang values ('6300V12','Apollo Pro
+ject EVO','46558050000','10');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [penjualan_barang]> select * from barang;
++-----------+---------------------------+--------------+------+
+| id_barang | nama_barang               | harga        | stok |
++-----------+---------------------------+--------------+------+
+| 3746F6    | W Motors Lykan HyperSport | 55000000000  |    7 |
+| 5980V12   | Pagani Kurota Copper      | 60000000000  |    1 |
+| 6300V12   | Apollo Project EVO        | 46558050000  |   10 |
+| 7000V8    | Hennessey Venom GT Spyder | 18600000000  |   13 |
+| 8000W16   | Bugatti La Voiture Noire  | 306300000000 |    1 |
+| F140V12   | Apollo Intensa Emozione   | 38000000000  |   10 |
++-----------+---------------------------+--------------+------+
+6 rows in set (0.000 sec)
+
+MariaDB [penjualan_barang]> alter table barang add Brand varchar(50) after n
+ama_barang;
+Query OK, 0 rows affected (0.008 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [penjualan_barang]> select * from barang;
++-----------+---------------------------+-------+--------------+------+
+| id_barang | nama_barang               | Brand | harga        | stok |
++-----------+---------------------------+-------+--------------+------+
+| 3746F6    | W Motors Lykan HyperSport | NULL  | 55000000000  |    7 |
+| 5980V12   | Pagani Kurota Copper      | NULL  | 60000000000  |    1 |
+| 6300V12   | Apollo Project EVO        | NULL  | 46558050000  |   10 |
+| 7000V8    | Hennessey Venom GT Spyder | NULL  | 18600000000  |   13 |
+| 8000W16   | Bugatti La Voiture Noire  | NULL  | 306300000000 |    1 |
+| F140V12   | Apollo Intensa Emozione   | NULL  | 38000000000  |   10 |
++-----------+---------------------------+-------+--------------+------+
+6 rows in set (0.001 sec)
+
+MariaDB [penjualan_barang]> UPDATE barang SET brand = 'W Motors' WHERE id_barang = '3746F6';
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [penjualan_barang]> select * from barang;
++-----------+---------------------------+----------+--------------+------+
+| id_barang | nama_barang               | Brand    | harga        | stok |
++-----------+---------------------------+----------+--------------+------+
+| 3746F6    | W Motors Lykan HyperSport | W Motors | 55000000000  |    7 |
+| 5980V12   | Pagani Kurota Copper      | NULL     | 60000000000  |    1 |
+| 6300V12   | Apollo Project EVO        | NULL     | 46558050000  |   10 |
+| 7000V8    | Hennessey Venom GT Spyder | NULL     | 18600000000  |   13 |
+| 8000W16   | Bugatti La Voiture Noire  | NULL     | 306300000000 |    1 |
+| F140V12   | Apollo Intensa Emozione   | NULL     | 38000000000  |   10 |
++-----------+---------------------------+----------+--------------+------+
+6 rows in set (0.000 sec)
+
+MariaDB [penjualan_barang]> UPDATE barang SET brand = 'Pagani' WHERE id_barang = '5980V12';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [penjualan_barang]> UPDATE barang SET brand = 'Apollo' WHERE id_barang = '6300V12';
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [penjualan_barang]> UPDATE barang SET brand = 'Hennessey' WHERE id_barang = '7000V8';
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [penjualan_barang]> UPDATE barang SET brand = 'Bugatti' WHERE id_barang = '8000W16';
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [penjualan_barang]> UPDATE barang SET brand = 'Apollo' WHERE id_barang = 'F140V12';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [penjualan_barang]> select * from barang;
++-----------+---------------------------+-----------+--------------+------+
+| id_barang | nama_barang               | Brand     | harga        | stok |
++-----------+---------------------------+-----------+--------------+------+
+| 3746F6    | W Motors Lykan HyperSport | W Motors  | 55000000000  |    7 |
+| 5980V12   | Pagani Kurota Copper      | Pagani    | 60000000000  |    1 |
+| 6300V12   | Apollo Project EVO        | Apollo    | 46558050000  |   10 |
+| 7000V8    | Hennessey Venom GT Spyder | Hennessey | 18600000000  |   13 |
+| 8000W16   | Bugatti La Voiture Noire  | Bugatti   | 306300000000 |    1 |
+| F140V12   | Apollo Intensa Emozione   | Apollo    | 38000000000  |   10 |
++-----------+---------------------------+-----------+--------------+------+
+6 rows in set (0.000 sec)
+
+MariaDB [penjualan_barang]> select id_barang,nama_barang,brand from barang;
++-----------+---------------------------+-----------+
+| id_barang | nama_barang               | brand     |
++-----------+---------------------------+-----------+
+| 3746F6    | W Motors Lykan HyperSport | W Motors  |
+| 5980V12   | Pagani Kurota Copper      | Pagani    |
+| 6300V12   | Apollo Project EVO        | Apollo    |
+| 7000V8    | Hennessey Venom GT Spyder | Hennessey |
+| 8000W16   | Bugatti La Voiture Noire  | Bugatti   |
+| F140V12   | Apollo Intensa Emozione   | Apollo    |
++-----------+---------------------------+-----------+
+6 rows in set (0.001 sec)
+
+MariaDB [penjualan_barang]> select id_barang,nama_barang,brand from barang w
+here brand = 'Apollo';
++-----------+-------------------------+--------+
+| id_barang | nama_barang             | brand  |
++-----------+-------------------------+--------+
+| 6300V12   | Apollo Project EVO      | Apollo |
+| F140V12   | Apollo Intensa Emozione | Apollo |
++-----------+-------------------------+--------+
+2 rows in set (0.000 sec)
+
+MariaDB [penjualan_barang]>

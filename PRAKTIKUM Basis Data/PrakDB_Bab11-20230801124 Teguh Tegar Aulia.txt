@@ -1,0 +1,241 @@
+Microsoft Windows [Version 10.0.22631.4460]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HP>cd/xampp/mysql/bin
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database praktikum11;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [(none)]> use praktikum11;
+Database changed
+MariaDB [praktikum11]> CREATE TABLE fakultas (
+    ->     id_fakultas INT AUTO_INCREMENT PRIMARY KEY,
+    ->     nama_fakultas VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.010 sec)
+
+MariaDB [praktikum11]> CREATE TABLE program_studi (
+    -> id_prodi INT AUTO_INCREMENT PRIMARY KEY,
+    -> nama_prodi VARCHAR(255) NOT NULL,
+    -> id_fakultas INT,
+    -> FOREIGN KEY (id_fakultas) REFERENCES fakultas(id_fakultas) ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [praktikum11]> CREATE TABLE agama (
+    -> id_agama INT AUTO_INCREMENT PRIMARY KEY,
+    -> nama_agama VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.014 sec)
+
+MariaDB [praktikum11]> CREATE TABLE dosen (
+    -> id_dosen INT AUTO_INCREMENT PRIMARY KEY,
+    -> nama_dosen VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [praktikum11]> CREATE TABLE dpa (
+    -> id_dpa INT AUTO_INCREMENT PRIMARY KEY,
+    -> id_dosen INT,
+    -> FOREIGN KEY (id_dosen) REFERENCES dosen(id_dosen) ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (0.016 sec)
+
+MariaDB [praktikum11]> CREATE TABLE mahasiswa (
+    -> id_mahasiswa INT AUTO_INCREMENT PRIMARY KEY,
+    -> nama_mahasiswa VARCHAR(255) NOT NULL,
+    -> id_prodi INT,
+    -> id_agama INT,
+    -> id_dpa INT,
+    -> FOREIGN KEY (id_prodi) REFERENCES program_studi(id_prodi) ON DELETE CASCADE ON UPDATE CASCADE,
+    -> FOREIGN KEY (id_agama) REFERENCES agama(id_agama) ON DELETE SET NULL ON UPDATE CASCADE,
+    -> FOREIGN KEY (id_dpa) REFERENCES dosen(id_dosen) ON DELETE SET NULL ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (0.027 sec)
+
+MariaDB [praktikum11]> CREATE TABLE matakuliah (
+    -> id_matakuliah INT AUTO_INCREMENT PRIMARY KEY,
+    -> nama_matakuliah VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.016 sec)
+
+MariaDB [praktikum11]> CREATE TABLE jadwal_kuliah (
+    -> id_jadwal INT AUTO_INCREMENT PRIMARY KEY,
+    -> id_matakuliah INT,
+    -> id_dosen INT,
+    -> hari VARCHAR(255),
+    -> jam VARCHAR(255),
+    -> FOREIGN KEY (id_matakuliah) REFERENCES matakuliah(id_matakuliah) ON DELETE CASCADE ON UPDATE CASCADE,
+    -> FOREIGN KEY (id_dosen) REFERENCES dosen(id_dosen) ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (0.027 sec)
+
+MariaDB [praktikum11]> CREATE TABLE krs (
+    -> id_krs INT AUTO_INCREMENT PRIMARY KEY,
+    -> id_mahasiswa INT,
+    -> id_matakuliah INT,
+    -> FOREIGN KEY (id_mahasiswa) REFERENCES mahasiswa(id_mahasiswa) ON DELETE CASCADE ON UPDATE CASCADE,
+    -> FOREIGN KEY (id_matakuliah) REFERENCES matakuliah(id_matakuliah) ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (0.026 sec)
+
+MariaDB [praktikum11]> CREATE TABLE provinsi (
+    -> id_provinsi INT AUTO_INCREMENT PRIMARY KEY,
+    -> nama_provinsi VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.016 sec)
+
+MariaDB [praktikum11]> CREATE TABLE kelas (
+    -> id_kelas INT AUTO_INCREMENT PRIMARY KEY,
+    -> nama_kelas VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [praktikum11]> show tables;
++-----------------------+
+| Tables_in_praktikum11 |
++-----------------------+
+| agama                 |
+| dosen                 |
+| dpa                   |
+| fakultas              |
+| jadwal_kuliah         |
+| kelas                 |
+| krs                   |
+| mahasiswa             |
+| matakuliah            |
+| program_studi         |
+| provinsi              |
++-----------------------+
+11 rows in set (0.013 sec)
+
+MariaDB [praktikum11]> INSERT INTO Fakultas (id_fakultas, nama_fakultas) VALUES
+    -> (1, 'Fakultas Ilmu Komputer'),
+    -> (2, 'Fakultas Ekonomi'),
+    -> (3, 'Fakultas Hukum'),
+    -> (4, 'Fakultas Ilmu Kesehatan'),
+    -> (5, 'Fakultas Teknik');
+Query OK, 5 rows affected (0.003 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum11]> INSERT INTO program_studi (id_prodi, nama_prodi, id_fakultas) VALUES
+    -> (1, 'Teknik Informatika', 1),
+    -> (2, 'Sistem Informasi', 1),
+    -> (3, 'Manajemen', 2);
+Query OK, 3 rows affected (0.012 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum11]> INSERT INTO agama (id_agama, nama_agama) VALUES
+    -> (1, 'Islam'),
+    -> (2, 'Kristen'),
+    -> (3, 'Hindu');
+Query OK, 3 rows affected (0.011 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum11]> INSERT INTO dosen (id_dosen, nama_dosen) VALUES
+    -> (1, 'Dr. Budi Santoso'),
+    -> (2, 'Prof. Siti Aminah'),
+    -> (3, 'Dr. Agus Wijaya');
+Query OK, 3 rows affected (0.011 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum11]> INSERT INTO dpa (id_dpa, id_dosen) VALUES
+    -> (1, 1),
+    -> (2, 2),
+    -> (3, 3);
+Query OK, 3 rows affected (0.012 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum11]> INSERT INTO mahasiswa (id_mahasiswa, nama_mahasiswa, id_prodi, id_agama, id_dpa) VALUES
+    -> (1, 'Ahmad Fauzi', 1, 1, 1),
+    -> (2, 'Siti Nurhaliza', 2, 2, 2),
+    -> (3, 'Radet Ireng', 3, 3, 3);
+Query OK, 3 rows affected (0.011 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum11]> INSERT INTO matakuliah (id_matakuliah, nama_matakuliah) VALUES
+    -> (1, 'Basis Data'),
+    -> (2, 'Pemrograman Web'),
+    -> (3, 'Algoritma dan Struktur Data');
+Query OK, 3 rows affected (0.011 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum11]> INSERT INTO jadwal_kuliah (id_jadwal, id_matakuliah, id_dosen, hari, jam) VALUES
+    -> (1, 1, 1, 'Senin', '08:00'),
+    -> (2, 2, 2, 'Rabu', '10:00'),
+    -> (3, 3, 3, 'Jumat', '13:00');
+Query OK, 3 rows affected (0.011 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum11]> INSERT INTO krs (id_krs, id_mahasiswa, id_matakuliah) VALUES
+    -> (1, 1, 1),
+    -> (2, 2, 2),
+    -> (3, 3, 3);
+Query OK, 3 rows affected (0.011 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum11]> INSERT INTO provinsi (id_provinsi, nama_provinsi) VALUES
+    -> (1, 'Jawa Barat'),
+    -> (2, 'Jawa Tengah'),
+    -> (3, 'Jawa Timur');
+Query OK, 3 rows affected (0.012 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum11]>
+MariaDB [praktikum11]> INSERT INTO kelas (id_kelas, nama_kelas) VALUES
+    -> (1, 'TI-A'),
+    -> (2, 'SI-B'),
+    -> (3, 'TI-C');
+Query OK, 3 rows affected (0.012 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum11]> SELECT m.nama_mahasiswa, mk.nama_matakuliah
+    -> FROM krs k
+    -> JOIN mahasiswa m ON k.id_mahasiswa = m.id_mahasiswa
+    -> JOIN matakuliah mk ON k.id_matakuliah = mk.id_matakuliah;
++----------------+-----------------------------+
+| nama_mahasiswa | nama_matakuliah             |
++----------------+-----------------------------+
+| Ahmad Fauzi    | Basis Data                  |
+| Siti Nurhaliza | Pemrograman Web             |
+| Radet Ireng    | Algoritma dan Struktur Data |
++----------------+-----------------------------+
+3 rows in set (0.010 sec)
+
+MariaDB [praktikum11]> SELECT m.nama_mahasiswa, mk.nama_matakuliah, jk.hari, jk.jam, d.nama_dosen
+    -> FROM krs k
+    -> JOIN mahasiswa m ON k.id_mahasiswa = m.id_mahasiswa
+    -> JOIN jadwal_kuliah jk ON k.id_matakuliah = jk.id_matakuliah
+    -> JOIN matakuliah mk ON jk.id_matakuliah = mk.id_matakuliah
+    -> JOIN dosen d ON jk.id_dosen = d.id_dosen;
++----------------+-----------------------------+-------+-------+-------------------+
+| nama_mahasiswa | nama_matakuliah             | hari  | jam   | nama_dosen        |
++----------------+-----------------------------+-------+-------+-------------------+
+| Ahmad Fauzi    | Basis Data                  | Senin | 08:00 | Dr. Budi Santoso  |
+| Siti Nurhaliza | Pemrograman Web             | Rabu  | 10:00 | Prof. Siti Aminah |
+| Radet Ireng    | Algoritma dan Struktur Data | Jumat | 13:00 | Dr. Agus Wijaya   |
++----------------+-----------------------------+-------+-------+-------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [praktikum11]> SELECT m.nama_mahasiswa, d.nama_dosen AS DPA
+    -> FROM mahasiswa m
+    -> JOIN dosen d ON m.id_dpa = d.id_dosen;
++----------------+-------------------+
+| nama_mahasiswa | DPA               |
++----------------+-------------------+
+| Ahmad Fauzi    | Dr. Budi Santoso  |
+| Siti Nurhaliza | Prof. Siti Aminah |
+| Radet Ireng    | Dr. Agus Wijaya   |
++----------------+-------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [praktikum11]>

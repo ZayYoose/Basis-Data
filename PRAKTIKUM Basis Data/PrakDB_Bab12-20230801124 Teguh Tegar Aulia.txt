@@ -1,0 +1,327 @@
+Microsoft Windows [Version 10.0.22631.4460]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HP>cd\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++----------------------+
+| Database             |
++----------------------+
+| dealer_pagani        |
+| information_schema   |
+| mysql                |
+| orderentry           |
+| penjualan_barang     |
+| penjualan_barang_uts |
+| performance_schema   |
+| pertemuan_4          |
+| phpmyadmin           |
+| praktikum            |
+| test                 |
++----------------------+
+11 rows in set (0.031 sec)
+
+MariaDB [(none)]> use prak10;
+Database changed
+MariaDB [prak10]> show tables;
++------------------+
+| Tables_in_prak10 |
++------------------+
+| t_identitas      |
+| t_kabupaten      |
+| t_provinsi       |
++------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [prak10]> SELECT
+    ->     t_identitas.ID_Identitas,
+    ->     t_identitas.Name,
+    ->     t_identitas.Gender,
+    ->     t_identitas.Place,
+    ->     t_identitas.Birthday,
+    ->     t_identitas.Address,
+    ->     t_identitas.ID_Profinsi,
+    ->     t_profinsi.Nama_Profinsi,
+    ->     t_identitas.About,
+    ->     t_identitas.NO_Telp
+    -> FROM
+    ->     t_identitas
+    -> LEFT JOIN
+    ->     t_profinsi
+    ->     ON t_identitas.ID_Profinsi = t_profinsi.ID_Profinsi
+    -> LEFT JOIN
+    ->     t_kabupaten
+    ->     ON t_identitas.ID_Kabupaten = t_kabupaten.ID_Kabupaten;
+ERROR 1146 (42S02): Table 'prak10.t_profinsi' doesn't exist
+MariaDB [prak10]> SELECT
+    ->     t_identitas.ID_Identitas,
+    ->     t_identitas.Name,
+    ->     t_identitas.Gender,
+    ->     t_identitas.Place,
+    ->     t_identitas.Birthday,
+    ->     t_identitas.Address,
+    ->     t_identitas.ID_Profinsi,
+    ->     t_profinsi.Nama_Profinsi,
+    ->     t_identitas.About,
+    ->     t_identitas.NO_Telp
+    -> FROM
+    ->     t_identitas
+    -> LEFT JOIN
+    ->     t_provinsi
+    ->     ON t_identitas.ID_Profinsi = t_profinsi.ID_Profinsi
+    -> LEFT JOIN
+    ->     t_kabupaten
+    ->     ON t_identitas.ID_Kabupaten = t_kabupaten.ID_Kabupaten;
+ERROR 1054 (42S22): Unknown column 't_identitas.ID_Profinsi' in 'field list'
+MariaDB [prak10]> SELECT
+    ->     t_identitas.ID_Identitas,
+    ->     t_identitas.Name,
+    ->     t_identitas.Gender,
+    ->     t_identitas.Place,
+    ->     t_identitas.Birthday,
+    ->     t_identitas.Address,
+    ->     t_identitas.ID_Profinsi,
+    ->     t_profinsi.Nama_Profinsi,
+    ->     t_identitas.About,
+    ->     t_identitas.NO_Telp
+    -> FROM
+    ->     t_identitas
+    -> LEFT JOIN
+    ->     t_provinsi
+    ->     ON t_identitas.ID_Provinsi = t_provinsi.ID_Provinsi
+    -> LEFT JOIN
+    ->     t_kabupaten
+    ->     ON t_identitas.ID_Kabupaten = t_kabupaten.ID_Kabupaten;
+ERROR 1054 (42S22): Unknown column 't_identitas.ID_Profinsi' in 'field list'
+MariaDB [prak10]> SELECT
+    ->     t_identitas.ID_Identitas,
+    ->     t_identitas.Name,
+    ->     t_identitas.Gender,
+    ->     t_identitas.Place,
+    ->     t_identitas.Birthday,
+    ->     t_identitas.Address,
+    ->     t_identitas.ID_Provinsi,
+    ->     t_provinsi.Nama_Provinsi,
+    ->     t_identitas.About,
+    ->     t_identitas.NO_Telp
+    -> FROM
+    ->     t_identitas
+    -> LEFT JOIN
+    ->     t_provinsi
+    ->     ON t_identitas.ID_Provinsi = t_provinsi.ID_Provinsi
+    -> LEFT JOIN
+    ->     t_kabupaten
+    ->     ON t_identitas.ID_Kabupaten = t_kabupaten.ID_Kabupaten;
+ERROR 1054 (42S22): Unknown column 't_provinsi.Nama_Provinsi' in 'field list'
+MariaDB [prak10]> select * from t_provinsi;
++-------------+---------------+------------+
+| id_provinsi | provinsi      | Kota       |
++-------------+---------------+------------+
+|           1 | dki jakarta   | jakarta    |
+|           2 | banten        | banten     |
+|           3 | jawa barat    | bandung    |
+|           4 | jawa Tengah   | semarang   |
+|           5 | di yogyakarta | yogyakarta |
+|           6 | jawa timur    | semarang   |
++-------------+---------------+------------+
+6 rows in set (0.001 sec)
+
+MariaDB [prak10]> SELECT
+    ->     t_identitas.ID_Identitas,
+    ->     t_identitas.Name,
+    ->     t_identitas.Gender,
+    ->     t_identitas.Place,
+    ->     t_identitas.Birthday,
+    ->     t_identitas.Address,
+    ->     t_identitas.ID_Provinsi,
+    ->     t_provinsi.Provinsi,
+    ->     t_identitas.About,
+    ->     t_identitas.NO_Telp
+    -> FROM
+    ->     t_identitas
+    -> LEFT JOIN
+    ->     t_provinsi
+    ->     ON t_identitas.ID_Provinsi = t_provinsi.ID_Provinsi
+    -> LEFT JOIN
+    ->     t_kabupaten
+    ->     ON t_identitas.ID_Kabupaten = t_kabupaten.ID_Kabupaten;
+ERROR 1054 (42S22): Unknown column 't_identitas.ID_Kabupaten' in 'on clause'
+MariaDB [prak10]> sByeCtrl-C -- exit!
+
+
+c:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 9
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| orderentry         |
+| performance_schema |
+| phpmyadmin         |
+| prak10             |
+| prak11             |
+| test               |
++--------------------+
+8 rows in set (0.001 sec)
+
+MariaDB [(none)]> use prak10;
+Database changed
+MariaDB [prak10]> select * from t_kabupaten;
++--------------+----------------+-------------+
+| id_kabupaten | kabupaten      | id_provinsi |
++--------------+----------------+-------------+
+|            1 | lampung tengah |           5 |
+|            2 | lampung        |           5 |
+|            3 | sleman         |           5 |
+|            4 | wates          |           5 |
+|            5 | bantul         |           5 |
+|            6 | gunung kidul   |           5 |
+|            7 | cilacap        |           4 |
+|            8 | solo           |           4 |
+|            9 | banyumas       |           4 |
+|           10 | kebumen        |           4 |
++--------------+----------------+-------------+
+10 rows in set (0.001 sec)
+
+MariaDB [prak10]> SELECT
+    ->     t_identitas.ID_Identitas,
+    ->     t_identitas.Name,
+    ->     t_identitas.Gender,
+    ->     t_identitas.Place,
+    ->     t_identitas.Birthday,
+    ->     t_identitas.Address,
+    ->     t_identitas.ID_Provinsi,
+    ->     t_provinsi.Provinsi,
+    ->     t_identitas.About,
+    ->     t_identitas.NO_Telp
+    -> FROM
+    ->     t_identitas
+    -> LEFT JOIN
+    ->     t_provinsi
+    ->     ON t_identitas.ID_Provinsi = t_provinsi.ID_Provinsi
+    -> LEFT JOIN
+    ->     t_kabupaten
+    ->     ON t_identitas.ID_Kabupaten = t_kabupaten.ID_Kabupaten;
+ERROR 1054 (42S22): Unknown column 't_identitas.ID_Kabupaten' in 'on clause'
+MariaDB [prak10]> select * from t_identitas;
++--------------+----------------------+--------+--------------+------------+--------------+-------------+-------+---------+
+| id_identitas | name                 | gender | place        | birthday   | address      | id_provinsi | about | no_telp |
++--------------+----------------------+--------+--------------+------------+--------------+-------------+-------+---------+
+| 09102084     | widodo               | m      | sleman       | 1987-12-15 | sleman       |           5 | NULL  | NULL    |
+| 09111057     | taufan ardi wahyuda  | m      | sleman       | 1987-01-12 | sleman       |           5 | NULL  | NULL    |
+| 09111086     | tri suwarno          | m      | sleman       | 1990-12-13 | sleman       |           5 | NULL  | NULL    |
+| 09112022     | setiorini            | f      | lampung      | 1987-12-12 | wates        |           5 | NULL  | NULL    |
+| 09112033     | yuli antoro          | m      | bantul       | 1986-01-14 | bantul       |           5 | NULL  | NULL    |
+| 0912064      | nur suci arnashanti  | f      | gunung kidul | 1986-01-15 | gunung kidul |           5 | NULL  | NULL    |
+| 0912081      | zaenal abidin        | m      | cilacap      | 1987-01-11 | cilacap      |           4 | NULL  | NULL    |
+| 10112008     | eka yani arsari      | f      | solo         | 1991-01-12 | solo         |           4 | NULL  | NULL    |
+| 10112038     | anik tataria         | f      | banyumas     | 1987-09-09 | banyumas     |           4 | NULL  | NULL    |
+| 10112077     | dian sulistyo widodo | m      | kebumen      | 1986-11-11 | kebumen      |           4 | NULL  | NULL    |
+| 10112099     | sri sumarahati       | f      | kebumen      | 1987-10-10 | kebumen      |           4 | NULL  | NULL    |
++--------------+----------------------+--------+--------------+------------+--------------+-------------+-------+---------+
+11 rows in set (0.001 sec)
+
+MariaDB [prak10]> select * from t_provinsi;
++-------------+---------------+------------+
+| id_provinsi | provinsi      | Kota       |
++-------------+---------------+------------+
+|           1 | dki jakarta   | jakarta    |
+|           2 | banten        | banten     |
+|           3 | jawa barat    | bandung    |
+|           4 | jawa Tengah   | semarang   |
+|           5 | di yogyakarta | yogyakarta |
+|           6 | jawa timur    | semarang   |
++-------------+---------------+------------+
+6 rows in set (0.001 sec)
+
+MariaDB [prak10]> SELECT
+    ->     t_identitas.ID_Identitas,
+    ->     t_identitas.Name,
+    ->     t_identitas.Gender,
+    ->     t_identitas.Place,
+    ->     t_identitas.Birthday,
+    ->     t_identitas.Address,
+    ->     t_identitas.ID_Provinsi,
+    ->     t_provinsi.Provinsi,
+    ->     t_identitas.About,
+    ->     t_identitas.NO_Telp
+    -> FROM
+    ->     t_identitas
+    -> LEFT JOIN
+    ->     t_provinsi
+    ->     ON t_identitas.ID_Provinsi = t_provinsi.ID_Provinsi
+    -> ;
++--------------+----------------------+--------+--------------+------------+--------------+-------------+---------------+-------+---------+
+| ID_Identitas | Name                 | Gender | Place        | Birthday   | Address      | ID_Provinsi | Provinsi      | About | NO_Telp |
++--------------+----------------------+--------+--------------+------------+--------------+-------------+---------------+-------+---------+
+| 09102084     | widodo               | m      | sleman       | 1987-12-15 | sleman       |           5 | di yogyakarta | NULL  | NULL    |
+| 09111057     | taufan ardi wahyuda  | m      | sleman       | 1987-01-12 | sleman       |           5 | di yogyakarta | NULL  | NULL    |
+| 09111086     | tri suwarno          | m      | sleman       | 1990-12-13 | sleman       |           5 | di yogyakarta | NULL  | NULL    |
+| 09112022     | setiorini            | f      | lampung      | 1987-12-12 | wates        |           5 | di yogyakarta | NULL  | NULL    |
+| 09112033     | yuli antoro          | m      | bantul       | 1986-01-14 | bantul       |           5 | di yogyakarta | NULL  | NULL    |
+| 0912064      | nur suci arnashanti  | f      | gunung kidul | 1986-01-15 | gunung kidul |           5 | di yogyakarta | NULL  | NULL    |
+| 0912081      | zaenal abidin        | m      | cilacap      | 1987-01-11 | cilacap      |           4 | jawa Tengah   | NULL  | NULL    |
+| 10112008     | eka yani arsari      | f      | solo         | 1991-01-12 | solo         |           4 | jawa Tengah   | NULL  | NULL    |
+| 10112038     | anik tataria         | f      | banyumas     | 1987-09-09 | banyumas     |           4 | jawa Tengah   | NULL  | NULL    |
+| 10112077     | dian sulistyo widodo | m      | kebumen      | 1986-11-11 | kebumen      |           4 | jawa Tengah   | NULL  | NULL    |
+| 10112099     | sri sumarahati       | f      | kebumen      | 1987-10-10 | kebumen      |           4 | jawa Tengah   | NULL  | NULL    |
++--------------+----------------------+--------+--------------+------------+--------------+-------------+---------------+-------+---------+
+11 rows in set (0.001 sec)
+
+MariaDB [prak10]> SELECT
+    ->     t_identitas.ID_Identitas,
+    ->     t_identitas.Name,
+    ->     t_identitas.Gender,
+    ->     t_identitas.Place,
+    ->     t_identitas.Birthday,
+    ->     t_identitas.Address,
+    ->     t_identitas.ID_Provinsi,
+    ->     t_provinsi.Provinsi,
+    ->     t_identitas.About,
+    ->     t_identitas.NO_Telp
+    -> FROM
+    ->     t_identitas
+    -> LEFT JOIN
+    ->     t_provinsi
+    ->     ON t_identitas.ID_Provinsi = t_provinsi.ID_Provinsi;
++--------------+----------------------+--------+--------------+------------+--------------+-------------+---------------+-------+---------+
+| ID_Identitas | Name                 | Gender | Place        | Birthday   | Address      | ID_Provinsi | Provinsi      | About | NO_Telp |
++--------------+----------------------+--------+--------------+------------+--------------+-------------+---------------+-------+---------+
+| 09102084     | widodo               | m      | sleman       | 1987-12-15 | sleman       |           5 | di yogyakarta | NULL  | NULL    |
+| 09111057     | taufan ardi wahyuda  | m      | sleman       | 1987-01-12 | sleman       |           5 | di yogyakarta | NULL  | NULL    |
+| 09111086     | tri suwarno          | m      | sleman       | 1990-12-13 | sleman       |           5 | di yogyakarta | NULL  | NULL    |
+| 09112022     | setiorini            | f      | lampung      | 1987-12-12 | wates        |           5 | di yogyakarta | NULL  | NULL    |
+| 09112033     | yuli antoro          | m      | bantul       | 1986-01-14 | bantul       |           5 | di yogyakarta | NULL  | NULL    |
+| 0912064      | nur suci arnashanti  | f      | gunung kidul | 1986-01-15 | gunung kidul |           5 | di yogyakarta | NULL  | NULL    |
+| 0912081      | zaenal abidin        | m      | cilacap      | 1987-01-11 | cilacap      |           4 | jawa Tengah   | NULL  | NULL    |
+| 10112008     | eka yani arsari      | f      | solo         | 1991-01-12 | solo         |           4 | jawa Tengah   | NULL  | NULL    |
+| 10112038     | anik tataria         | f      | banyumas     | 1987-09-09 | banyumas     |           4 | jawa Tengah   | NULL  | NULL    |
+| 10112077     | dian sulistyo widodo | m      | kebumen      | 1986-11-11 | kebumen      |           4 | jawa Tengah   | NULL  | NULL    |
+| 10112099     | sri sumarahati       | f      | kebumen      | 1987-10-10 | kebumen      |           4 | jawa Tengah   | NULL  | NULL    |
++--------------+----------------------+--------+--------------+------------+--------------+-------------+---------------+-------+---------+
+11 rows in set (0.001 sec)
+
+MariaDB [prak10]>
+
+
+

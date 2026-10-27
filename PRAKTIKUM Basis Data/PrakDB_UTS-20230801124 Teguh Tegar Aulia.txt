@@ -1,0 +1,85 @@
+Microsoft Windows [Version 10.0.22631.4317]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HP>cd\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 10
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dealer_pagani      |
+| information_schema |
+| mysql              |
+| orderentry         |
+| penjualan_barang   |
+| performance_schema |
+| pertemuan_4        |
+| phpmyadmin         |
+| praktikum          |
+| test               |
++--------------------+
+10 rows in set (0.001 sec)
+
+MariaDB [(none)]> create database penjualan_barang_uts;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> use penjualan_barang_uts;
+Database changed
+MariaDB [penjualan_barang_uts]> create table barang (
+    ->     id_barang int auto_increment primary key,
+    ->     nama_barang varchar(100) not null,
+    ->     kategori varchar(50),
+    ->     harga bigint,
+    ->     stok int
+    -> );
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [penjualan_barang_uts]> create table transaksi (
+    ->     id_transaksi int auto_increment primary key,
+    ->     id_barang int,
+    ->     jumlah int,
+    ->     total_harga bigint,
+    ->     tanggal_transaksi date,
+    ->     foreign key (id_barang) references barang(id_barang)
+    -> );
+Query OK, 0 rows affected (0.016 sec)
+
+MariaDB [penjualan_barang_uts]> create table pelanggan (
+    ->     id_pelanggan int auto_increment primary key,
+    ->     nama_pelanggan varchar(100),
+    ->     alamat varchar(200),
+    ->     telepon varchar(20)
+    -> );
+Query OK, 0 rows affected (0.005 sec)
+
+MariaDB [penjualan_barang_uts]> create table supplier (
+    ->     id_supplier int auto_increment primary key,
+    ->     nama_supplier varchar(100),
+    ->     alamat varchar(200),
+    ->     telepon varchar(20)
+    -> );
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [penjualan_barang_uts]> create table pembelian (
+    ->     id_pembelian int auto_increment primary key,
+    ->     id_supplier int,
+    ->     id_barang int,
+    ->     jumlah int,
+    ->     harga_pembelian bigint,
+    ->     tanggal_pembelian date,
+    ->     foreign key (id_supplier) references supplier(id_supplier),
+    ->     foreign key (id_barang) references barang(id_barang)
+    -> );
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [penjualan_barang_uts]>

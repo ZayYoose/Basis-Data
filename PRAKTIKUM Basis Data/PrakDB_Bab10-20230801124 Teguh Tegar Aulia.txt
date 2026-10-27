@@ -1,0 +1,101 @@
+Microsoft Windows [Version 10.0.22631.4460]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HP>cd\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++----------------------+
+| Database             |
++----------------------+
+| dealer_pagani        |
+| information_schema   |
+| mysql                |
+| orderentry           |
+| penjualan_barang     |
+| penjualan_barang_uts |
+| performance_schema   |
+| pertemuan_4          |
+| phpmyadmin           |
+| praktikum            |
+| test                 |
++----------------------+
+11 rows in set (0.031 sec)
+
+MariaDB [(none)]> create database prak;;
+Query OK, 1 row affected (0.001 sec)
+
+ERROR: No query specified
+
+MariaDB [(none)]> use prak;
+Database changed
+MariaDB [prak]> CREATE TABLE T_Provinsi (
+    ->     ID_Provinsi INT PRIMARY KEY AUTO_INCREMENT,
+    ->     Nama_Provinsi VARCHAR(50) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.019 sec)
+
+MariaDB [prak]> CREATE TABLE T_Identitas (
+    ->     ID_Identitas INT PRIMARY KEY AUTO_INCREMENT,
+    ->     Nama_Mahasiswa VARCHAR(50) NOT NULL,
+    ->     ID_Provinsi INT,
+    ->     FOREIGN KEY (ID_Provinsi) REFERENCES T_Provinsi(ID_Provinsi)
+    -> );
+Query OK, 0 rows affected (0.018 sec)
+
+MariaDB [prak]> ALTER TABLE T_Identitas ADD No_Telp VARCHAR(15) NOT NULL;
+Query OK, 0 rows affected (0.006 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [prak]> CREATE TABLE T_Kabupaten (
+    ->     ID_Kabupaten INT PRIMARY KEY AUTO_INCREMENT,
+    ->     Nama_Kabupaten VARCHAR(50) NOT NULL,
+    ->     ID_Provinsi INT,
+    ->     FOREIGN KEY (ID_Provinsi) REFERENCES T_Provinsi(ID_Provinsi)
+    -> );
+Query OK, 0 rows affected (0.017 sec)
+
+MariaDB [prak]> INSERT INTO T_Provinsi (Nama_Provinsi) VALUES
+    -> ('Lampung');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [prak]> INSERT INTO T_Kabupaten (Nama_Kabupaten, ID_Provinsi) VALUES
+
+    -> ('Lampung Tengah', 1),
+    -> ('Bandar Lampung', 1),
+    -> ('Metro', 1),
+    -> ('Pringsewu', 1),
+    -> ('Pesawaran', 1);
+Query OK, 5 rows affected (0.011 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [prak]> SELECT * FROM T_Provinsi;
++-------------+---------------+
+| ID_Provinsi | Nama_Provinsi |
++-------------+---------------+
+|           1 | Lampung       |
++-------------+---------------+
+1 row in set (0.001 sec)
+
+MariaDB [prak]> SELECT * FROM T_Kabupaten;
++--------------+----------------+-------------+
+| ID_Kabupaten | Nama_Kabupaten | ID_Provinsi |
++--------------+----------------+-------------+
+|            6 | Lampung Tengah |           1 |
+|            7 | Bandar Lampung |           1 |
+|            8 | Metro          |           1 |
+|            9 | Pringsewu      |           1 |
+|           10 | Pesawaran      |           1 |
++--------------+----------------+-------------+
+5 rows in set (0.000 sec)
+
+MariaDB [prak]>

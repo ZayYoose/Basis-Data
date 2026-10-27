@@ -1,0 +1,312 @@
+Microsoft Windows [Version 10.0.22631.4317]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HP>cd\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 12
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| orderentry         |
+| penjualan_barang   |
+| performance_schema |
+| pertemuan_4        |
+| phpmyadmin         |
+| praktikum          |
+| test               |
++--------------------+
+9 rows in set (0.001 sec)
+
+MariaDB [(none)]> use orderentry;
+Database changed
+MariaDB [orderentry]> show tables;
++----------------------+
+| Tables_in_orderentry |
++----------------------+
+| customers            |
+| orderitems           |
+| orders               |
+| productnotes         |
+| products             |
+| vendors              |
++----------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [orderentry]> desc customers;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| cust_id      | char(5)     | NO   | PRI | NULL    |       |
+| cust_name    | varchar(25) | NO   |     | NULL    |       |
+| cust_address | varchar(30) | YES  |     | NULL    |       |
+| cust_city    | varchar(25) | YES  |     | NULL    |       |
+| cust_state   | varchar(5)  | YES  |     | NULL    |       |
+| cust_zip     | varchar(5)  | YES  |     | NULL    |       |
+| cust_country | varchar(20) | YES  |     | NULL    |       |
+| cust_contact | varchar(25) | YES  |     | NULL    |       |
+| cust_email   | varchar(30) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+9 rows in set (0.009 sec)
+
+MariaDB [orderentry]> desc vendors;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| vend_id      | char(4)     | NO   | PRI | NULL    |       |
+| vend_name    | varchar(25) | NO   |     | NULL    |       |
+| vend_address | varchar(30) | YES  |     | NULL    |       |
+| vend_city    | varchar(20) | YES  |     | NULL    |       |
+| vend_state   | varchar(5)  | YES  |     | NULL    |       |
+| vend_zip     | varchar(7)  | YES  |     | NULL    |       |
+| vend_country | varchar(15) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+7 rows in set (0.011 sec)
+
+MariaDB [orderentry]> desc orderitems;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| order_num  | int(11)     | NO   | PRI | NULL    |       |
+| order_item | int(11)     | NO   | PRI | NULL    |       |
+| prod_id    | varchar(10) | NO   |     | NULL    |       |
+| quantity   | int(11)     | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.010 sec)
+
+MariaDB [orderentry]> alter table customers drop column cust_address;
+Query OK, 0 rows affected (0.026 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [orderentry]> alter table customers drop column cust_state;
+Query OK, 0 rows affected (0.016 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [orderentry]> alter table customers drop column cust_zip;
+Query OK, 0 rows affected (0.013 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [orderentry]> alter table customers drop column cust_country;
+Query OK, 0 rows affected (0.014 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [orderentry]> alter table customers drop column cust_contact;
+Query OK, 0 rows affected (0.039 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [orderentry]> desc customers;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| cust_id    | char(5)     | NO   | PRI | NULL    |       |
+| cust_name  | varchar(25) | NO   |     | NULL    |       |
+| cust_city  | varchar(25) | YES  |     | NULL    |       |
+| cust_email | varchar(30) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.017 sec)
+
+MariaDB [orderentry]> alter table vendors drop column vend_address;
+Query OK, 0 rows affected (0.014 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [orderentry]> alter table vendors drop column vend_state;
+Query OK, 0 rows affected (0.004 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [orderentry]> alter table vendors drop column vend_zip;
+Query OK, 0 rows affected (0.004 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [orderentry]> desc vendors;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| vend_id      | char(4)     | NO   | PRI | NULL    |       |
+| vend_name    | varchar(25) | NO   |     | NULL    |       |
+| vend_city    | varchar(20) | YES  |     | NULL    |       |
+| vend_country | varchar(15) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.018 sec)
+
+MariaDB [orderentry]> insert into customers values ('AVH01','Tegar','Belanda','tegar@gmail.com');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [orderentry]> insert into customers values ('AVH02','Diki','Thailand','diki@gmail.com');
+Query OK, 1 row affected (0.012 sec)
+
+MariaDB [orderentry]> insert into customers values ('AVH03','Aji','Chili','Aji@gmail.com');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [orderentry]> insert into customers values ('AVH04','Rapli','Irak','Rapli@gmail.com');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [orderentry]> insert into customers values ('AVH05','Kurniawan','Denmark','Kurniawan@gmail.com');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [orderentry]> select * from customers;
++---------+-----------+-----------+---------------------+
+| cust_id | cust_name | cust_city | cust_email          |
++---------+-----------+-----------+---------------------+
+| AVH01   | Tegar     | Belanda   | tegar@gmail.com     |
+| AVH02   | Diki      | Thailand  | diki@gmail.com      |
+| AVH03   | Aji       | Chili     | Aji@gmail.com       |
+| AVH04   | Rapli     | Irak      | Rapli@gmail.com     |
+| AVH05   | Kurniawan | Denmark   | Kurniawan@gmail.com |
++---------+-----------+-----------+---------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [orderentry]> insert into vendors values ('V001','PT Kezyaluv Gituu','Jakarta','Indonesia');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [orderentry]> insert into vendors values ('V002','PT Aqcelin Boo','Bandung','Indonesia');
+Query OK, 1 row affected (0.010 sec)
+
+MariaDB [orderentry]> insert into vendors values ('V003','PT Jusstin K3cil','Surabaya','Indonesia');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [orderentry]> insert into vendors values ('V004','PT ZahraCut3 Max','Medan','Indonesia');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [orderentry]> insert into vendors values ('V005','PT R3za Punkz','Denpasar','Indonesia');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [orderentry]> select * from vendors;
++---------+-------------------+-----------+--------------+
+| vend_id | vend_name         | vend_city | vend_country |
++---------+-------------------+-----------+--------------+
+| V001    | PT Kezyaluv Gituu | Jakarta   | Indonesia    |
+| V002    | PT Aqcelin Boo    | Bandung   | Indonesia    |
+| V003    | PT Jusstin K3cil  | Surabaya  | Indonesia    |
+| V004    | PT ZahraCut3 Max  | Medan     | Indonesia    |
+| V005    | PT R3za Punkz     | Denpasar  | Indonesia    |
++---------+-------------------+-----------+--------------+
+5 rows in set (0.000 sec)
+
+MariaDB [orderentry]> insert into orderitems values ('3130','7','217405969','50');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [orderentry]> insert into orderitems values ('3131','3','610178985','32');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [orderentry]> insert into orderitems values ('3132','9','064524482','75');
+Query OK, 1 row affected (0.010 sec)
+
+MariaDB [orderentry]> insert into orderitems values ('3133','2','013684315','93');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [orderentry]> insert into orderitems values ('3134','9','042414275','1');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [orderentry]> select * from orderitems;
++-----------+------------+-----------+----------+
+| order_num | order_item | prod_id   | quantity |
++-----------+------------+-----------+----------+
+|      3130 |          7 | 217405969 |       50 |
+|      3131 |          3 | 610178985 |       32 |
+|      3132 |          9 | 064524482 |       75 |
+|      3133 |          2 | 013684315 |       93 |
+|      3134 |          9 | 042414275 |        1 |
++-----------+------------+-----------+----------+
+5 rows in set (0.000 sec)
+
+MariaDB [orderentry]> select * from customers order by cust_name asc;
++---------+-----------+-----------+---------------------+
+| cust_id | cust_name | cust_city | cust_email          |
++---------+-----------+-----------+---------------------+
+| AVH03   | Aji       | Chili     | Aji@gmail.com       |
+| AVH02   | Diki      | Thailand  | diki@gmail.com      |
+| AVH05   | Kurniawan | Denmark   | Kurniawan@gmail.com |
+| AVH04   | Rapli     | Irak      | Rapli@gmail.com     |
+| AVH01   | Tegar     | Belanda   | tegar@gmail.com     |
++---------+-----------+-----------+---------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [orderentry]> select * from vendors order by vend_name desc;
++---------+-------------------+-----------+--------------+
+| vend_id | vend_name         | vend_city | vend_country |
++---------+-------------------+-----------+--------------+
+| V004    | PT ZahraCut3 Max  | Medan     | Indonesia    |
+| V005    | PT R3za Punkz     | Denpasar  | Indonesia    |
+| V001    | PT Kezyaluv Gituu | Jakarta   | Indonesia    |
+| V003    | PT Jusstin K3cil  | Surabaya  | Indonesia    |
+| V002    | PT Aqcelin Boo    | Bandung   | Indonesia    |
++---------+-------------------+-----------+--------------+
+5 rows in set (0.000 sec)
+
+MariaDB [orderentry]> select * from orderitems order by order_item desc;
++-----------+------------+-----------+----------+
+| order_num | order_item | prod_id   | quantity |
++-----------+------------+-----------+----------+
+|      3132 |          9 | 064524482 |       75 |
+|      3134 |          9 | 042414275 |        1 |
+|      3130 |          7 | 217405969 |       50 |
+|      3131 |          3 | 610178985 |       32 |
+|      3133 |          2 | 013684315 |       93 |
++-----------+------------+-----------+----------+
+5 rows in set (0.000 sec)
+
+MariaDB [orderentry]> select count(quantity) as banyaknya, sum(quantity) as total, avg(quantity) as rata_rata, min(quantity) as jumlah_minimal, max(quantity) as jumlah_maksimal from orderitems;
++-----------+-------+-----------+----------------+-----------------+
+| banyaknya | total | rata_rata | jumlah_minimal | jumlah_maksimal |
++-----------+-------+-----------+----------------+-----------------+
+|         5 |   251 |   50.2000 |              1 |              93 |
++-----------+-------+-----------+----------------+-----------------+
+1 row in set (0.000 sec)
+
+MariaDB [orderentry]> SELECT order_num, SUM(quantity) AS total_quantity
+    -> FROM orderitems
+    -> GROUP BY order_num
+    -> HAVING SUM(quantity) BETWEEN 15 AND 50;
++-----------+----------------+
+| order_num | total_quantity |
++-----------+----------------+
+|      3130 |             50 |
+|      3131 |             32 |
++-----------+----------------+
+2 rows in set (0.000 sec)
+
+MariaDB [orderentry]> SELECT vend_id, vend_name
+    -> FROM vendors
+    -> WHERE vend_city = 'Denpasar';
++---------+---------------+
+| vend_id | vend_name     |
++---------+---------------+
+| V005    | PT R3za Punkz |
++---------+---------------+
+1 row in set (0.000 sec)
+
+MariaDB [orderentry]> SELECT vend_id, vend_name
+    -> FROM vendors
+    -> where vend_name like '%e%';
++---------+-------------------+
+| vend_id | vend_name         |
++---------+-------------------+
+| V001    | PT Kezyaluv Gituu |
+| V002    | PT Aqcelin Boo    |
++---------+-------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [orderentry]> select prod_id as nama_produk, quantity as jumlah_produk from orderitems;
++-------------+---------------+
+| nama_produk | jumlah_produk |
++-------------+---------------+
+| 217405969   |            50 |
+| 610178985   |            32 |
+| 064524482   |            75 |
+| 013684315   |            93 |
+| 042414275   |             1 |
++-------------+---------------+
+5 rows in set (0.000 sec)
+
+MariaDB [orderentry]>

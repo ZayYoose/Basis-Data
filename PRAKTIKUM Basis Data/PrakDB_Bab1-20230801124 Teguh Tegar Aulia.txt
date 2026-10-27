@@ -1,0 +1,90 @@
+Microsoft Windows [Version 10.0.22631.4169]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\HP>cd\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 17
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| praktikum          |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [(none)]> use praktikum;
+Database changed
+MariaDB [praktikum]> create table prak_20230801124 (
+    -> NIM varchar(20) not null,
+    -> NAMA varchar(50) not null,
+    -> MATA_KULIAH varchar(50) not null,
+    -> JAM time not null,
+    -> HARI varchar(10) not null,
+    -> RUANGAN varchar(10) not null
+    -> );
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [praktikum]> desc prak_20230801124;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| NIM         | varchar(20) | NO   |     | NULL    |       |
+| NAMA        | varchar(50) | NO   |     | NULL    |       |
+| MATA_KULIAH | varchar(50) | NO   |     | NULL    |       |
+| JAM         | time        | NO   |     | NULL    |       |
+| HARI        | varchar(10) | NO   |     | NULL    |       |
+| RUANGAN     | varchar(10) | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.019 sec)
+
+MariaDB [praktikum]> insert into prak_20230801124 ( NIM, NAMA, MATA_KULIAH, JAM, HARI, RUANGAN)
+    -> values (20230801203, 'Avrian Rizky Maulana','Basis Data','13:00:00','Kamis','403');
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [praktikum]> select * from prak_20230801124;
++-------------+----------------------+-------------+----------+-------+---------+
+| NIM         | NAMA                 | MATA_KULIAH | JAM      | HARI  | RUANGAN |
++-------------+----------------------+-------------+----------+-------+---------+
+| 20230801203 | Avrian Rizky Maulana | Basis Data  | 13:00:00 | Kamis | 403     |
++-------------+----------------------+-------------+----------+-------+---------+
+1 row in set (0.000 sec)
+
+MariaDB [praktikum]> insert into prak_20230801124 ( NIM, NAMA, MATA_KULIAH, JAM, HARI, RUANGAN) values
+    -> (20230801195, 'Dhicky Haryadi Supriyono','Basis Data','13:00:00','Kamis','403'),
+    -> (20230801401, 'Rafly Akbar Ravsanjani','Basis Data','13:00:00','Kamis','403'),
+    -> (20230801274, 'Arditya Adjie Rosandi','Basis Data','13:00:00','Kamis','403'),
+    -> (20230801054, 'Kurniawan','Basis Data','13:00:00','Kamis','403'),
+    -> (20230801400, 'Muhammad Najib Ardiansah','Basis Data','13:00:00','Kamis','403'),
+    -> (20230801124, 'Teguh Tegar Aulia','Basis Data','13:00:00','Kamis','403');
+Query OK, 6 rows affected (0.004 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum]> select * from prak_20230801124;
++-------------+--------------------------+-------------+----------+-------+---------+
+| NIM         | NAMA                     | MATA_KULIAH | JAM      | HARI  | RUANGAN |
++-------------+--------------------------+-------------+----------+-------+---------+
+| 20230801203 | Avrian Rizky Maulana     | Basis Data  | 13:00:00 | Kamis | 403     |
+| 20230801195 | Dhicky Haryadi Supriyono | Basis Data  | 13:00:00 | Kamis | 403     |
+| 20230801401 | Rafly Akbar Ravsanjani   | Basis Data  | 13:00:00 | Kamis | 403     |
+| 20230801274 | Arditya Adjie Rosandi    | Basis Data  | 13:00:00 | Kamis | 403     |
+| 20230801054 | Kurniawan                | Basis Data  | 13:00:00 | Kamis | 403     |
+| 20230801400 | Muhammad Najib Ardiansah | Basis Data  | 13:00:00 | Kamis | 403     |
+| 20230801124 | Teguh Tegar Aulia        | Basis Data  | 13:00:00 | Kamis | 403     |
++-------------+--------------------------+-------------+----------+-------+---------+
+7 rows in set (0.000 sec)
+
+MariaDB [praktikum]>
